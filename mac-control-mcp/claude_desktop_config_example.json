@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "mac-control": {
+      "command": "node",
+      "args": ["/REPLACE/WITH/ABSOLUTE/PATH/TO/mac-control-mcp/build/index.js"]
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { exec } from 'child_process';
+import { exec, spawn } from 'child_process';
 import { promisify } from 'util';
 import { AppleScriptOptions } from '../types/index.js';
 
@@ -63,22 +63,40 @@ export async function executeMultiLineAppleScript(
   const script = scriptLines.join('\n');
   const { timeout = 5000 } = options;
 
-  try {
-    const { stdout, stderr } = await execAsync(`osascript`, {
-      timeout,
-      encoding: 'utf8',
-      input: script
+  return new Promise((resolve, reject) => {
+    const child = spawn('osascript', ['-']);
+    let stdout = '';
+    let stderr = '';
+
+    const timer = setTimeout(() => {
+      child.kill();
+      reject(new Error('AppleScript execution timed out'));
+    }, timeout);
+
+    child.stdout.on('data', (data) => {
+      stdout += data.toString();
     });
 
-    if (stderr) {
-      throw new Error(`AppleScript error: ${stderr}`);
-    }
+    child.stderr.on('data', (data) => {
+      stderr += data.toString();
+    });
 
-    return stdout.trim();
-  } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(`Failed to execute AppleScript: ${error.message}`);
-    }
-    throw error;
-  }
+    child.on('close', (code) => {
+      clearTimeout(timer);
+      if (code !== 0) {
+        reject(new Error(`AppleScript error: ${stderr}`));
+      } else {
+        resolve(stdout.trim());
+      }
+    });
+
+    child.on('error', (error) => {
+      clearTimeout(timer);
+      reject(new Error(`Failed to execute AppleScript: ${error.message}`));
+    });
+
+    // Write the script to stdin
+    child.stdin.write(script);
+    child.stdin.end();
+  });
 }
