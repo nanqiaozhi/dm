@@ -4,7 +4,10 @@
       "Bash(npm install:*)",
       "Bash(git fetch:*)",
       "Bash(tree:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Read(//Applications/**)",
+      "Bash(mdfind:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []

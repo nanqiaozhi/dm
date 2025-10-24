@@ -1,4 +1,5 @@
 import { executeAppleScript } from '../utils/applescript.js';
+import { executeShell } from '../utils/shell.js';
 
 /**
  * Open/launch an application
@@ -13,6 +14,23 @@ export async function openApp(name: string): Promise<string> {
     return `Application "${name}" opened successfully`;
   } catch (error) {
     throw new Error(`Failed to open application "${name}". Make sure the application name is correct.`);
+  }
+}
+
+/**
+ * Open a new window/instance of an application
+ */
+export async function openNewWindow(name: string): Promise<string> {
+  if (!name || name.trim() === '') {
+    throw new Error('Application name is required');
+  }
+
+  try {
+    // Use open -n to open a new instance
+    await executeShell(`open -n -a "${name}"`, { allowDangerous: true });
+    return `New window of "${name}" opened successfully`;
+  } catch (error) {
+    throw new Error(`Failed to open new window of "${name}". Make sure the application name is correct.`);
   }
 }
 

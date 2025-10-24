@@ -144,6 +144,20 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         },
       },
       {
+        name: "open_new_window",
+        description: "Open a new window/instance of an application",
+        inputSchema: {
+          type: "object",
+          properties: {
+            name: {
+              type: "string",
+              description: "Name of the application to open a new window for (e.g., 'Google Chrome', 'Safari')",
+            },
+          },
+          required: ["name"],
+        },
+      },
+      {
         name: "list_running_apps",
         description: "List all currently running applications",
         inputSchema: {
@@ -333,6 +347,9 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         break;
       case "close_app":
         result = await appTools.closeApp(args.name as string, args.force as boolean);
+        break;
+      case "open_new_window":
+        result = await appTools.openNewWindow(args.name as string);
         break;
       case "list_running_apps":
         result = await appTools.listRunningApps();
