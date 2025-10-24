@@ -1,0 +1,26 @@
+{
+  "name": "mac-control-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for controlling Mac computers via AppleScript and shell commands",
+  "type": "module",
+  "main": "build/index.js",
+  "bin": {
+    "mac-control-mcp": "build/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "prepare": "npm run build",
+    "test": "echo \"No tests yet\""
+  },
+  "keywords": ["mcp", "mac", "automation", "applescript", "control"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.20.2"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.1",
+    "typescript": "^5.9.3"
+  }
+}
