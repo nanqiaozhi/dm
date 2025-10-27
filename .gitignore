@@ -1,37 +1,10 @@
-# Node.js
 node_modules/
-npm-debug.log
-yarn-error.log
-package-lock.json
-
-# Build outputs
 dist/
 build/
-*.js.map
-*.d.ts.map
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# OS
 .DS_Store
-Thumbs.db
-
-# Environment
+*.log
 .env
 .env.local
-.env.*.local
-
-# Logs
-logs/
-*.log
-
-# Claude settings (contains sensitive info)
-.claude/settings.local.json
-
-# MCP config (may contain sensitive paths)
-.mcp.json
+coverage/
+.vscode/
+.idea/
